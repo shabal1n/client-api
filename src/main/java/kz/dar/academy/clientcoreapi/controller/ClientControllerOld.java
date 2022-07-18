@@ -1,8 +1,7 @@
 package kz.dar.academy.clientcoreapi.controller;
 
-import kz.dar.academy.clientcoreapi.model.ClientRequest;
-import kz.dar.academy.clientcoreapi.model.ClientResponse;
-import kz.dar.academy.clientcoreapi.service.client.ClientService;
+import kz.dar.academy.clientcoreapi.model.ClientModel;
+import kz.dar.academy.clientcoreapi.service.deprecated.ClientServiceOld;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.core.env.Environment;
@@ -13,12 +12,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/client")
+@RequestMapping("/deprecated/client")
 @EnableEurekaClient
-public class ClientController {
+public class ClientControllerOld {
 
     @Autowired
-    private ClientService clientService;
+    private ClientServiceOld clientServiceOld;
 
     @Autowired
     private Environment environment;
@@ -29,28 +28,29 @@ public class ClientController {
     }
 
     @PostMapping
-    public ClientResponse createClient(@RequestBody ClientRequest clientRequest) {
-        return clientService.createClient(clientRequest);
+    public ResponseEntity<String> createClient(@RequestBody ClientModel clientModel) {
+        clientServiceOld.createClient(clientModel);
+        return new ResponseEntity<>("Created new client", HttpStatus.OK);
     }
 
     @GetMapping("/all")
-    public List<ClientResponse> getAllClients() {
-        return clientService.getAllClients();
+    public List<ClientModel> getAllClients() {
+        return clientServiceOld.getAllClients();
     }
 
     @GetMapping("/{clientId}")
-    public ClientResponse getClientById(@PathVariable String clientId) {
-        return clientService.getClientById(clientId);
+    public ClientModel getClientById(@PathVariable String clientId) {
+        return clientServiceOld.getClientById(clientId);
     }
 
     @PutMapping("/{clientId}")
-    public ClientResponse updateClientById(@RequestBody ClientRequest clientRequest) {
-        return clientService.updateClientById(clientRequest);
+    public ResponseEntity<String> updateClientById(@PathVariable String clientId, @RequestBody ClientModel clientModel) {
+        clientServiceOld.updateClientById(clientId, clientModel);
+        return new ResponseEntity<>("Client was updated", HttpStatus.OK);
     }
-
     @DeleteMapping("/{clientId}")
     public ResponseEntity<String> deleteClientById(@PathVariable String clientId) {
-        clientService.deleteClientById(clientId);
+        clientServiceOld.deleteClientById(clientId);
         return new ResponseEntity<>("Client was deleted", HttpStatus.OK);
     }
 }
