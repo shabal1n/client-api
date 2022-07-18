@@ -1,10 +1,10 @@
-package kz.dar.academy.clientcoreapi.service;
+package kz.dar.academy.clientcoreapi.service.deprecated;
 
 import kz.dar.academy.clientcoreapi.model.ClientModel;
 
 import java.util.List;
 
-public interface ClientService {
+public interface ClientServiceOld {
     void createClient(ClientModel clientModel);
     List<ClientModel> getAllClients();
     ClientModel getClientById(String clientId);

@@ -1,6 +1,7 @@
-package kz.dar.academy.clientcoreapi.service;
+package kz.dar.academy.clientcoreapi.service.deprecated;
 
 import kz.dar.academy.clientcoreapi.model.ClientModel;
+import kz.dar.academy.clientcoreapi.service.deprecated.ClientServiceOld;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class ClientServiceImpl implements ClientService {
+public class ClientServiceOldImpl implements ClientServiceOld {
     private static final HashMap<String, ClientModel> clients = new HashMap<>();
 
     static {
